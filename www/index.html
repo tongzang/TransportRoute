@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="css/style.css" media="screen,projection">
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection">
+    <link type="text/css" rel="stylesheet" href="css/material-icons.css" media="screen,projection">
+    <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
+    <link href="css/ionic.app.css" rel="stylesheet">
+    -->
+    <!-- ionic/angularjs js -->
+    <script src="lib/ionic/js/ionic.bundle.js"></script>
+    <script src="lib/ionic-platform-web-client/dist/ionic.io.bundle.min.js"></script>
+    <!-- cordova script (this will be a 404 during development) -->
+    <!-- Cordova is bootstrapped by ionic-platform-web-client, uncomment this if you remove ionic-platform-web-client... -->
+    <!-- <script src="cordova.js"></script> -->
+    <!-- your app's js -->
+    <script src="js/app.js"></script>
+</head>
+
+<body ng-app="starter" ng-controller="dssController as dssValue">
+    <div ng-show="dssValue.show">
+        <div class="nav-wrapper2">
+            <a ng-click="dssValue.restart()" class="waves-effect waves-light btn deep-orange lighten-1"><i class="material-icons left">replay</i>กลับไป</a>
+        </div>
+    </div>
+    <div>
+        <center>
+            <div ng-hide="dssValue.show" class="row">
+                <div class="box">
+                    <center>
+                        <br><img src="images/logo.png" width="250px">
+                        <br>
+                        <label class="text2">Transport Route DSS</label>
+                    </center>
+                </div>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <form ng-submit="dssValue.showData()">
+                    <div class="col s6">
+                        <label class="text1">ต้นทาง</label>
+                        <select name="source" class="browser-default" ng-model="dssValue.source">
+                            <option value="" disabled selected>เลือก</option>
+                            <option value="ปราจีนบุรี (ตลาดวงเวียนนเรศวร)">ปราจีนบุรี (ตลาดวงเวียนนเรศวร)</option>
+                        </select>
+                    </div>
+                    <div class="col s6">
+                        <label class="text1">ปลายทาง</label>
+                        <select name="destination" class="browser-default" ng-model="dssValue.destination">
+                            <option value="" disabled selected>เลือก</option>
+                            <option value="อนุสาวรีย์ชัยสมรภูมิ">อนุสาวรีย์ชัยสมรภูมิ</option>
+                            <option value="ฟิวเจอร์พาร์ค รังสิต">ฟิวเจอร์พาร์ค รังสิต</option>
+                        </select>
+                    </div>
+                    <div class="col s12">
+                        <br>
+                        <br>
+                        <button class="btn waves-effect waves-light deep-orange lighten-1" type="submit" name="action">ยืนยัน<i class="large material-icons left">explore</i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </center>
+        <div ng-show="dssValue.show">
+            <div class="box2">
+                <img src="images/ic_explore_white_48dp_2x.png" width="35px" style="vertical-align:middle;">&nbsp;การเดินทาง
+            </div>
+            <div style="margin-top: 49px;">
+                <ul class="collection">
+                    <li class="collection-item"><b>ต้นทาง</b><span style="margin-left: 26px;">{{dssValue.source}}</span></li>
+                    <li class="collection-item"><b>ปลายทาง</b><span style="margin-left: 10px;">{{dssValue.destination}}</span></li>
+                </ul>
+            </div>
+            <div style="margin-top:-15px;">
+                <table class="centered bordered">
+                    <thead>
+                        <tr>
+                            <th>ชนิด</th>
+                            <th>ชื่อ</th>
+                            <th data-field="id"><img src="images/price.png" width="35px" style="vertical-align:middle;">(บาท.)</th>
+                            <th data-field="name"><img src="images/dis.png" width="35px" style="vertical-align:middle;">(กม.)</th>
+                            <th data-field="price"><img src="images/time.png" width="35px" style="vertical-align:middle;">(ชม.)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="data in dssValue.data" ng-if="data.destination == dssValue.destination" >
+                            <td><img src="images/{{dssValue.showIcon(data.type)}}" width="35px" style="vertical-align:middle;"></td>
+                            <td>{{data.name}}</td>
+                            <td>{{data.price}}</td>
+                            <td>{{data.dis}}</td>
+                            <td>{{data.time}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="box4">
+                <img src="images/ic_question_answer_white_48dp_2x.png" width="35px" style="vertical-align:middle;">&nbsp;ช่วยตัดสินใจ
+            </div>
+            <div class="row" style="margin-top:-15px; ">
+                <div class="col s12">
+                    <ul class="tabs" style="background-color: #6dc5dd; position: absolute; left: 0px;">
+                        <li class="tab col s3"><a class="active" href="#test1">ราคา</a></li>
+                        <li class="tab col s3"><a href="#test2">ระยะทาง</a></li>
+                        <li class="tab col s3"><a href="#test3">เวลา</a></li>
+                    </ul>
+                </div>
+                <div id="test1" class="col s12 block">
+              <table class="centered bordered">
+                    <tbody>
+                        <tr ng-repeat="data in dssValue.priceArray">
+                            <td><img src="images/{{dssValue.showIcon(data.type)}}" width="35px" style="vertical-align:middle; text-align: right"></td>
+                            <td>{{data.name}}</td>
+                            <td><img src="images/price.png" width="35px" style="vertical-align:middle;"> {{data.price}} บาท</td>
+                        </tr>
+                    </tbody>
+                </table>
+                </div>
+                <div id="test2" class="col s12 block">
+              <table class="centered bordered">
+                    <tbody>
+                        <tr ng-repeat="data in dssValue.disArray">
+                            <td><img src="images/{{dssValue.showIcon(data.type)}}" width="35px" style="vertical-align:middle;"></td>
+                            <td>{{data.name}}</td>
+                            <td><img src="images/dis.png" width="35px" style="vertical-align:middle;"> {{data.dis}} กม.</td>
+                        </tr>
+                    </tbody>
+                </table>
+                </div>
+                <div id="test3" class="col s12 block">
+              <table class="centered bordered">
+                    <tbody>
+                        <tr ng-repeat="data in dssValue.timeArray">
+                            <td><img src="images/{{dssValue.showIcon(data.type)}}" width="35px" style="vertical-align:middle;"></td>
+                            <td>{{data.name}}</td>
+                            <td><img src="images/time.png" width="35px" style="vertical-align:middle;"> {{data.time}} ชม.</td>
+                        </tr>
+                    </tbody>
+                </table>
+                </div>
+            </div>
+                <br>
+        </div>
+    </div>
+    <script type="text/javascript" src="js/jquery-2.2.2.min.js"></script>
+    <script type="text/javascript" src="js/materialize.min.js"></script>
+    <script src="js/script.js"></script>
+</body>
+
+</html>
